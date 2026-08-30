@@ -1,124 +1,282 @@
 import { useState } from 'react';
 import {
   Alert,
+  Keyboard,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
-  const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
   const [temperature, setTemperature] = useState<number | null>(null);
   const [isFahrenheit, setIsFahrenheit] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const getWeather = async () => {
-    if (!city.trim()) {
-      Alert.alert('Missing city', 'Please enter a city.');
+    if (city.trim() === '') {
+      Keyboard.dismiss();
+
+      Alert.alert(
+        'Missing city',
+        'Please enter a city.'
+      );
+
       return;
     }
 
-    try {
-      setLoading(true);
+    Keyboard.dismiss();
+    setLoading(true);
 
-      // Find the city
-      const locationResponse = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-              city
-          )}&count=1`
-      );
+    try {
+      // Search for the city
+      const cityName = encodeURIComponent(city.trim());
+
+      const locationUrl =
+        'https://geocoding-api.open-meteo.com/v1/search' +
+        '?name=' +
+        cityName +
+        '&count=10' +
+        '&language=en' +
+        '&format=json';
+
+      const locationResponse = await fetch(locationUrl);
+
+      if (!locationResponse.ok) {
+        throw new Error('Could not search for the city.');
+      }
 
       const locationData = await locationResponse.json();
 
-      if (!locationData.results || locationData.results.length === 0) {
-        Alert.alert('City not found', 'Please check the city name.');
+      // No results at all
+      if (
+        !locationData.results ||
+        locationData.results.length === 0
+      ) {
+        Alert.alert(
+          'City not found',
+          'The city you entered does not exist. Please check the city name and try again.'
+        );
+
         return;
       }
 
-      const location = locationData.results[0];
+      // The exact city the user typed
+      const searchedCity = city.trim().toLowerCase();
 
-      // Get the weather
-      const weatherResponse = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`
+      const location = locationData.results.find(
+          (result: any) => {
+            if (!result.name || !result.feature_code) {
+              return false;
+            }
+
+            const resultName =
+                result.name.trim().toLowerCase();
+
+            const featureCode =
+                result.feature_code;
+
+            const isPopulatedPlace =
+                featureCode === 'PPL' ||
+                featureCode === 'PPLA' ||
+                featureCode === 'PPLA2' ||
+                featureCode === 'PPLA3' ||
+                featureCode === 'PPLA4' ||
+                featureCode === 'PPLC';
+
+            const nameMatches =
+                resultName === searchedCity;
+
+            const hasPopulation =
+                typeof result.population === 'number' &&
+                result.population > 0;
+
+            return (
+                isPopulatedPlace &&
+                nameMatches &&
+                hasPopulation
+            );
+          }
       );
 
-      const weatherData = await weatherResponse.json();
+      if (!location) {
+        Alert.alert(
+            'City not found',
+            `"${city.trim()}" is not a valid city. Please enter a real city name.`
+        );
 
-      setTemperature(weatherData.current.temperature_2m);
+        return;
+      }
+
+      // Save the country
+      setCountry(location.country);
+
+      // Get weather for the city
+      const weatherUrl =
+        'https://api.open-meteo.com/v1/forecast' +
+        '?latitude=' +
+        location.latitude +
+        '&longitude=' +
+        location.longitude +
+        '&current=temperature_2m';
+
+      const weatherResponse =
+        await fetch(weatherUrl);
+
+      if (!weatherResponse.ok) {
+        throw new Error(
+          'Could not get the weather.'
+        );
+      }
+
+      const weatherData =
+        await weatherResponse.json();
+
+      if (
+        !weatherData.current ||
+        typeof weatherData.current
+          .temperature_2m !== 'number'
+      ) {
+        throw new Error(
+          'Temperature data is unavailable.'
+        );
+      }
+
+      setTemperature(
+        weatherData.current.temperature_2m
+      );
     } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Something went wrong while getting the weather.');
+      console.log(
+        'Weather error:',
+        error
+      );
+
+      Alert.alert(
+        'Error',
+        'Something went wrong while getting the weather.'
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  // Convert Celsius to Fahrenheit
   const displayedTemperature =
-      temperature === null
-          ? null
-          : isFahrenheit
-              ? (temperature * 9) / 5 + 32
-              : temperature;
+    temperature === null
+      ? null
+      : isFahrenheit
+        ? (temperature * 9) / 5 + 32
+        : temperature;
 
-  return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.content}>
-          <Text style={styles.title}>Weather App</Text>
+  const weatherContent = (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
 
-          <TextInput
-              style={styles.input}
-              placeholder="Enter country"
-              value={country}
-              onChangeText={setCountry}
-          />
+        <Text style={styles.title}>
+          Weather App
+        </Text>
 
-          <TextInput
-              style={styles.input}
-              placeholder="Enter city"
-              value={city}
-              onChangeText={setCity}
-          />
+        <Text style={styles.label}>
+          Enter the city
+        </Text>
 
-          <TouchableOpacity
-              style={styles.button}
-              onPress={getWeather}
-              disabled={loading}
-          >
-            <Text style={styles.buttonText}>
-              {loading ? 'Loading...' : 'Get Weather'}
-            </Text>
-          </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter city"
+          value={city}
+          onChangeText={(text) => {
+            setCity(text);
 
-          {displayedTemperature !== null && (
-              <View style={styles.weatherContainer}>
-                <Text style={styles.temperature}>
-                  {displayedTemperature.toFixed(1)}°
-                  {isFahrenheit ? 'F' : 'C'}
+            // Clear the previous result
+            // when the user starts typing
+            if (temperature !== null) {
+              setTemperature(null);
+              setCountry('');
+            }
+          }}
+          autoCapitalize="words"
+          autoCorrect={false}
+          returnKeyType="done"
+          onSubmitEditing={Keyboard.dismiss}
+        />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={getWeather}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading
+              ? 'Loading...'
+              : 'Get Weather'}
+          </Text>
+        </TouchableOpacity>
+
+        {temperature !== null &&
+          displayedTemperature !== null && (
+            <View style={styles.weatherContainer}>
+
+              <Text style={styles.city}>
+                {city}
+              </Text>
+
+              <Text style={styles.country}>
+                {country}
+              </Text>
+
+              <Text style={styles.temperature}>
+                {displayedTemperature.toFixed(1)}°
+                {isFahrenheit ? 'F' : 'C'}
+              </Text>
+
+              <TouchableOpacity
+                style={styles.toggleButton}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  setIsFahrenheit(
+                    !isFahrenheit
+                  );
+                }}
+              >
+                <Text style={styles.toggleText}>
+                  {isFahrenheit
+                    ? 'Show in °C'
+                    : 'Show in °F'}
                 </Text>
+              </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.toggleButton}
-                    onPress={() => setIsFahrenheit(!isFahrenheit)}
-                >
-                  <Text style={styles.toggleText}>
-                    Show in °{isFahrenheit ? 'C' : 'F'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+            </View>
           )}
-        </View>
-      </SafeAreaView>
+
+      </View>
+    </SafeAreaView>
+  );
+
+  // Web
+  if (Platform.OS === 'web') {
+    return weatherContent;
+  }
+
+  // Mobile
+  return (
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+    >
+      {weatherContent}
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
 
   content: {
@@ -134,40 +292,59 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+
   input: {
     width: '100%',
+    height: 50,
     borderWidth: 1,
-    borderColor: '#999',
+    borderColor: '#999999',
     borderRadius: 10,
     paddingHorizontal: 15,
-    paddingVertical: 12,
     fontSize: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     marginBottom: 15,
   },
 
   button: {
     width: '100%',
-    paddingVertical: 14,
+    height: 50,
     borderRadius: 10,
     alignItems: 'center',
-    backgroundColor: '#333',
-    marginBottom: 25,
+    justifyContent: 'center',
+    backgroundColor: '#333333',
   },
 
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
   },
 
   weatherContainer: {
     alignItems: 'center',
+    marginTop: 30,
+  },
+
+  city: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+
+  country: {
+    fontSize: 18,
+    color: '#666666',
+    marginTop: 5,
   },
 
   temperature: {
     fontSize: 48,
     fontWeight: 'bold',
+    marginTop: 15,
     marginBottom: 20,
   },
 
@@ -175,7 +352,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    backgroundColor: '#eee',
+    backgroundColor: '#eeeeee',
   },
 
   toggleText: {
