@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {geocodeCity, GeocodedCity, getCurrentTemperatureCelsius} from "@/services/weather-api";
 
 export default function HomeScreen() {
   const [city, setCity] = useState('');
@@ -37,120 +38,13 @@ export default function HomeScreen() {
     try {
       // Search for the city
       const cityName = encodeURIComponent(city.trim());
-
-      const locationUrl =
-        'https://geocoding-api.open-meteo.com/v1/search' +
-        '?name=' +
-        cityName +
-        '&count=10' +
-        '&language=en' +
-        '&format=json';
-
-      const locationResponse = await fetch(locationUrl);
-
-      if (!locationResponse.ok) {
-        throw new Error('Could not search for the city.');
-      }
-
-      const locationData = await locationResponse.json();
-
-      // No results at all
-      if (
-        !locationData.results ||
-        locationData.results.length === 0
-      ) {
-        Alert.alert(
-          'City not found',
-          'The city you entered does not exist. Please check the city name and try again.'
-        );
-
-        return;
-      }
-
-      // The exact city the user typed
-      const searchedCity = city.trim().toLowerCase();
-
-      const location = locationData.results.find(
-          (result: any) => {
-            if (!result.name || !result.feature_code) {
-              return false;
-            }
-
-            const resultName =
-                result.name.trim().toLowerCase();
-
-            const featureCode =
-                result.feature_code;
-
-            const isPopulatedPlace =
-                featureCode === 'PPL' ||
-                featureCode === 'PPLA' ||
-                featureCode === 'PPLA2' ||
-                featureCode === 'PPLA3' ||
-                featureCode === 'PPLA4' ||
-                featureCode === 'PPLC';
-
-            const nameMatches =
-                resultName === searchedCity;
-
-            const hasPopulation =
-                typeof result.population === 'number' &&
-                result.population > 0;
-
-            return (
-                isPopulatedPlace &&
-                nameMatches &&
-                hasPopulation
-            );
-          }
-      );
-
-      if (!location) {
-        Alert.alert(
-            'City not found',
-            `"${city.trim()}" is not a valid city. Please enter a real city name.`
-        );
-
-        return;
-      }
+      const cityData: GeocodedCity = await geocodeCity(cityName);
 
       // Save the country
-      setCountry(location.country);
+      setCountry(cityData.country);
+      const temperature = await getCurrentTemperatureCelsius(cityData.latitude, cityData.longitude);
 
-      // Get weather for the city
-      const weatherUrl =
-        'https://api.open-meteo.com/v1/forecast' +
-        '?latitude=' +
-        location.latitude +
-        '&longitude=' +
-        location.longitude +
-        '&current=temperature_2m';
-
-      const weatherResponse =
-        await fetch(weatherUrl);
-
-      if (!weatherResponse.ok) {
-        throw new Error(
-          'Could not get the weather.'
-        );
-      }
-
-      const weatherData =
-        await weatherResponse.json();
-
-      if (
-        !weatherData.current ||
-        typeof weatherData.current
-          .temperature_2m !== 'number'
-      ) {
-        throw new Error(
-          'Temperature data is unavailable.'
-        );
-      }
-
-      setTemperature(
-        weatherData.current.temperature_2m
-      );
+      setTemperature(temperature);
     } catch (error) {
       console.log(
         'Weather error:',
