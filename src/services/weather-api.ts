@@ -90,12 +90,13 @@ export async function geocodeCity(cityName: string): Promise<GeocodedCity> {
         throw new CityNotFoundError(`"${trimmedName}" is not a valid city. Please enter a real city name.`);
     }
 
-    return {
+    const geocodeCity: GeocodedCity = {
         name: match.name!,
         country: match.country,
         latitude: match.latitude,
         longitude: match.longitude,
-    };
+    }
+    return geocodeCity;
 }
 
 /**
