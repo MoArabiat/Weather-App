@@ -13,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {geocodeCity, GeocodedCity, getCurrentTemperatureCelsius} from "@/services/weather-api";
 import TemperatureResult from '@/components/temperature-result';
+import Ionicons from '@react-native-vector-icons/ionicons';
 export default function HomeScreen() {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
@@ -68,6 +69,11 @@ export default function HomeScreen() {
         ? (temperature * 9) / 5 + 32
         : temperature;
 
+  const weatherIcon =
+      temperature !== null && temperature > 20
+          ? 'sunny-outline'
+          : 'cloud-outline';
+
   const weatherContent = (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -115,6 +121,11 @@ export default function HomeScreen() {
         {temperature !== null &&
           displayedTemperature !== null && (
             <View style={styles.weatherContainer}>
+              <Ionicons
+                  name={weatherIcon}
+                  size={70}
+                  color="orange"
+              />
 
               <Text style={styles.city}>
                 {city}
