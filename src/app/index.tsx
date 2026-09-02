@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {geocodeCity, GeocodedCity, getCurrentTemperatureCelsius} from "@/services/weather-api";
-
+import TemperatureResult from '@/components/temperature-result';
 export default function HomeScreen() {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
@@ -124,10 +124,7 @@ export default function HomeScreen() {
                 {country}
               </Text>
 
-              <Text style={styles.temperature}>
-                {displayedTemperature.toFixed(1)}°
-                {isFahrenheit ? 'F' : 'C'}
-              </Text>
+              <TemperatureResult displayedTemperature={displayedTemperature} isFahrenheit={isFahrenheit} />
 
               <TouchableOpacity
                 style={styles.toggleButton}
@@ -233,13 +230,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#666666',
     marginTop: 5,
-  },
-
-  temperature: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    marginTop: 15,
-    marginBottom: 20,
   },
 
   toggleButton: {
