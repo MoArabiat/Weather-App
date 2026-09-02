@@ -13,7 +13,7 @@ Screenshots and a demo will be added once the application UI is finalized.
 *Screenshots coming soon.*
 
 ### Web
-
+ 
 *Screenshot coming soon.*
 
 ---
