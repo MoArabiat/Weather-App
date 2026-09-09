@@ -6,15 +6,23 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 
 ## 📸 Screenshots
 
-Screenshots and a demo will be added once the application UI is finalized.
+
 
 ### Mobile
 
-*Screenshots coming soon.*
+<p align="center">
+  <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
+  <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.19.58 AM.png" width="700" />
+<img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.20.15 AM.png" width="700" />
+</p>
 
 ### Web
- 
-*Screenshot coming soon.*
+
+<p align="center">
+  <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.08 AM.png" width="700" />
+<img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.26 AM.png" width="700" />
+<img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.40 AM.png" width="700" />
+</p>
 
 ---
 
@@ -32,7 +40,7 @@ Screenshots and a demo will be added once the application UI is finalized.
 * 🧩 Modular and maintainable project structure
 
 ---
-
+ 
 ## 🛠️ Tech Stack
 
 | Technology                    | Purpose                                |

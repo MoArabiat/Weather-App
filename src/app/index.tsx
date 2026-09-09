@@ -125,8 +125,8 @@ export default function HomeScreen() {
             <View style={styles.weatherContainer}>
               <FontAwesomeFreeSolid
                   name={weatherIcon}
-                  size={73}
-                  color="red"
+                  size={62}
+                  color="black"
               />
 
               <Text style={styles.city}>
@@ -180,20 +180,21 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#F4F9FF',
   },
 
   content: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
+    fontSize: 34,
+    fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 35,
+    color: '#1E293B',
   },
 
   label: {
@@ -204,56 +205,72 @@ const styles = StyleSheet.create({
 
   input: {
     width: '100%',
-    height: 50,
+    height: 54,
     borderWidth: 1,
-    borderColor: '#999999',
-    borderRadius: 10,
-    paddingHorizontal: 15,
+    borderColor: '#D6E2F0',
+    borderRadius: 14,
+    paddingHorizontal: 16,
     fontSize: 16,
-    backgroundColor: '#ffffff',
-    marginBottom: 15,
+    backgroundColor: '#FFFFFF',
+    marginBottom: 16,
+    color: '#1E293B',
   },
 
   button: {
     width: '100%',
-    height: 50,
-    borderRadius: 10,
+    height: 54,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#333333',
+    backgroundColor: '#2563EB',
+    marginTop: 4,
   },
 
   buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '700',
   },
 
   weatherContainer: {
     alignItems: 'center',
     marginTop: 30,
+    padding: 24,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
   },
 
   city: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '700',
+    color: '#1E293B',
   },
 
   country: {
-    fontSize: 18,
-    color: '#666666',
-    marginTop: 5,
+    fontSize: 16,
+    color: '#64748B',
+    marginTop: 6,
   },
 
   toggleButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    backgroundColor: '#eeeeee',
+    paddingVertical: 11,
+    paddingHorizontal: 22,
+    borderRadius: 12,
+    backgroundColor: '#E8F1FF',
+    marginTop: 10,
   },
 
   toggleText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
+    color: '#2563EB',
   },
 });

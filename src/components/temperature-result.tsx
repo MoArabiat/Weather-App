@@ -23,9 +23,9 @@ export default function TemperatureResult({
 
 const styles = StyleSheet.create({
     temperature: {
-        fontSize: 48,
-        fontWeight: 'bold',
-        marginTop: 15,
-        marginBottom: 20,
+        fontSize: 64,
+        fontWeight: '700',
+        color: '#2563EB',
+        marginVertical: 15,
     },
 });
