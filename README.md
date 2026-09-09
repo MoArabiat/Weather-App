@@ -10,18 +10,18 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 
 ### Mobile
 
-<p align="center">
-  <img src="https://github.com/MoArabiat/Weather-App/main/assets/images/screenshots/mobile1.png" width="100" />
-  <img src="https://github.com/MoArabiat/Weather-App/blob/main/assets/images/screenshots/mobile2.png" width="100" />
-<img src="https://github.com/MoArabiat/Weather-App/blob/main/assets/images/screenshots/mobile3.png" width="100" />
+<p>
+  <img src="assets/images/screenshots/mobile1.png" alt="Mobile Screenshot 1" width="200">
+  <img src="assets/images/screenshots/mobile2.png" alt="Mobile Screenshot 2" width="200">
+<img src="assets/images/screenshots/mobile3.png" alt="Mobile Screenshot 2" width="200">
 </p>
 
 ### Web
 
-<p align="center">
-  <img src="../Weather-App/assets/images/screenshots/web1.png" width="100" />
-<img src="../Weather-App/assets/images/screenshots/web2.png" width="100" />
-<img src="../Weather-App/assets/images/screenshots/web3.png" width="100" />
+<p>
+  <img src="assets/images/screenshots/web1.png" alt="Web Screenshot 1" width="200">
+  <img src="assets/images/screenshots/web2.png" alt="Web Screenshot 2" width="200">
+<img src="assets/images/screenshots/web3.png" alt="Web Screenshot 2" width="200">
 </p>
 
 --- 
