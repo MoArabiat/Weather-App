@@ -40,7 +40,7 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 * 🧩 Modular and maintainable project structure
 
 ---
-
+ 
 ## 🛠️ Tech Stack
 
 | Technology                    | Purpose                                |
