@@ -24,7 +24,7 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.40 AM.png" width="700" />
 </p>
 
----
+--- 
 
 ## ✨ Features
 
