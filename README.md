@@ -11,17 +11,17 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 ### Mobile
 
 <p align="center">
-  <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
-  <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.19.58 AM.png" width="700" />
-<img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.20.15 AM.png" width="700" />
+  <img src="/Users/businessacc/WebstormProjects/Weather-App/assets/images/screenshots/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
+  <img src="/Users/businessacc/WebstormProjects/Weather-App/assets/images/screenshots/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
+<img src="/Users/businessacc/WebstormProjects/Weather-App/assets/images/screenshots/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
 </p>
 
 ### Web
 
 <p align="center">
-  <img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.08 AM.png" width="700" />
-<img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.26 AM.png" width="700" />
-<img src="/Users/businessacc/Desktop/Screenshot 2026-09-07 at 1.00.40 AM.png" width="700" />
+  <img src="/Users/businessacc/WebstormProjects/Weather-App/assets/images/screenshots/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
+<img src="/Users/businessacc/WebstormProjects/Weather-App/assets/images/screenshots/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
+<img src="/Users/businessacc/WebstormProjects/Weather-App/assets/images/screenshots/Screenshot 2026-09-07 at 1.20.30 AM.png" width="700" />
 </p>
 
 --- 
