@@ -10,11 +10,10 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 
 ### Mobile
 
-<p>
-  <img src="assets/images/screenshots/mobile1.png" alt="Mobile Screenshot 1" width="200">
-  <img src="assets/images/screenshots/mobile2.png" alt="Mobile Screenshot 2" width="200">
-<img src="assets/images/screenshots/mobile3.png" alt="Mobile Screenshot 2" width="200">
-</p>
+<div style="display: flex; flex-direction: row; justify-content: center; gap: 10px; flex-wrap: wrap;">
+  <img src="https://github.com" width="100" />
+  <img src="https://github.com" width="100" />
+</div>
 
 ### Web
 
