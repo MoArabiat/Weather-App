@@ -11,9 +11,9 @@ A cross-platform weather application built with **React Native, Expo, and TypeSc
 ### Mobile
 
 <p align="center">
-  <img src="https://github.com/MoArabiat/Weather-App/blob/main/assets/images/screenshots/mobile1.png" width="100" />
-  <img src="../Weather-App/assets/images/screenshots/mobile2.png" width="100" />
-<img src="../Weather-App/assets/images/screenshots/mobile3.png" width="100" />
+  <img src="https://github.com/MoArabiat/Weather-App/main/assets/images/screenshots/mobile1.png" width="100" />
+  <img src="https://github.com/MoArabiat/Weather-App/blob/main/assets/images/screenshots/mobile2.png" width="100" />
+<img src="https://github.com/MoArabiat/Weather-App/blob/main/assets/images/screenshots/mobile3.png" width="100" />
 </p>
 
 ### Web
